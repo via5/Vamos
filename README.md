@@ -20,3 +20,6 @@ There's a configuration file `VaM/BepInEx/config/via5.vamos.cfg`. It can be open
 
 ### Auto UI scale
 Vamos will detect when the VaM window changes monitors and will adjust the UI scaling based on the Windows font scaling (such as 100%, 125%, etc.).
+
+## License
+[Creative Commons Zero](https://creativecommons.org/share-your-work/public-domain/cc0). This project is in the public domain.
