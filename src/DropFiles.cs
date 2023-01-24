@@ -74,6 +74,8 @@ public class DropFiles : BasicFeature
 		}
 
 		Log.Info($"loading {f}");
-		SuperController.singleton.Load(files[0].Uid);
+
+		if (SuperController.singleton != null)
+			SuperController.singleton.Load(files[0].Uid);
 	}
 }

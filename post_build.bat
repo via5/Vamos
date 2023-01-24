@@ -5,7 +5,7 @@ set "dll=%~1"
 set "dll_name=%~n1%~x1"
 set "inc=%root%/vam.inc.bat"
 set "vam_paths="
-set "bepinex_plugins=BepInEx/scripts"
+set "bepinex_plugins=BepInEx/plugins"
 
 call :canonical "%root%"
 set root=!canonical_output!

@@ -26,14 +26,14 @@ public class AutoUIScale : BasicFeature
 			return;
 		}
 
-		cr_ = SuperController.singleton.StartCoroutine(CheckWindow());
+		cr_ = Vamos.Instance.StartCoroutine(CheckWindow());
 	}
 
 	protected override void DoDisable()
 	{
 		if (cr_ != null)
 		{
-			SuperController.singleton.StopCoroutine(cr_);
+			Vamos.Instance.StopCoroutine(cr_);
 			cr_ = null;
 		}
 	}
@@ -75,7 +75,9 @@ public class AutoUIScale : BasicFeature
 		GetDpiForMonitor(m, DpiType.Effective, out x, out y);
 
 		float scaling = x / 96.0f;
-		SuperController.singleton.monitorUIScale = scaling;
+
+		if (SuperController.singleton != null)
+			SuperController.singleton.monitorUIScale = scaling;
 
 		return true;
 	}
