@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33312.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vamos", "vamos.csproj", "{ACD3A99C-9B12-479A-BAB4-08B89906D2E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACD3A99C-9B12-479A-BAB4-08B89906D2E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD3A99C-9B12-479A-BAB4-08B89906D2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD3A99C-9B12-479A-BAB4-08B89906D2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD3A99C-9B12-479A-BAB4-08B89906D2E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47D13C9C-0A35-44BD-8F51-FA25DE4EFD6D}
+	EndGlobalSection
+EndGlobal
