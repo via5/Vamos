@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public static class Meta
 {
 	public const string Guid = "via5.vamos";
 	public const string Name = "Vamos";
-	public const string Version = "1.0";
+	public const string Version = "1.1";
 	public const string String = $"{Name} {Version}";
 }
 
@@ -101,13 +102,30 @@ public class Vamos : BaseUnityPlugin
 	private static Vamos instance_ = null;
 	private readonly List<IFeature> features_ = new List<IFeature>();
 	private Coroutine cr_ = null;
+	private bool quitting_ = false;
 
 	public static Vamos Instance
 	{
 		get { return instance_; }
 	}
 
-    void Awake()
+	public Coroutine StartCo(IEnumerator e)
+	{
+		if (quitting_)
+			return null;
+
+		return StartCoroutine(e);
+	}
+
+	public void StopCo(Coroutine co)
+	{
+		if (quitting_)
+			return;
+
+		StopCoroutine(co);
+	}
+
+	void Awake()
     {
 		try
 		{
@@ -130,13 +148,18 @@ public class Vamos : BaseUnityPlugin
 	{
 		try
 		{
-			cr_ = StartCoroutine(Run());
+			cr_ = StartCo(Run());
 		}
 		catch (Exception e)
 		{
 			Debug.LogError($"exception in Vamos.OnEnable():");
 			Debug.LogError(e.ToString());
 		}
+	}
+
+	void OnApplicationQuit()
+	{
+		quitting_ = true;
 	}
 
 	System.Collections.IEnumerator Run()
@@ -182,7 +205,7 @@ public class Vamos : BaseUnityPlugin
 	{
 		if (cr_ != null)
 		{
-			StopCoroutine(cr_);
+			StopCo(cr_);
 			cr_ = null;
 		}
 

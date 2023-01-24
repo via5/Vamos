@@ -26,14 +26,14 @@ public class AutoUIScale : BasicFeature
 			return;
 		}
 
-		cr_ = Vamos.Instance.StartCoroutine(CheckWindow());
+		cr_ = Vamos.Instance.StartCo(CheckWindow());
 	}
 
 	protected override void DoDisable()
 	{
 		if (cr_ != null)
 		{
-			Vamos.Instance.StopCoroutine(cr_);
+			Vamos.Instance.StopCo(cr_);
 			cr_ = null;
 		}
 	}

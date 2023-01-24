@@ -4,7 +4,7 @@
     <TargetFramework>net35</TargetFramework>
     <AssemblyName>vamos</AssemblyName>
     <Description>Additional VaM functionality</Description>
-    <Version>1.0</Version>
+    <Version>1.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
