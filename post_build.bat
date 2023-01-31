@@ -19,7 +19,7 @@ call :canonical "%this_bepinex%"
 set this_bepinex=!canonical_output!
 
 if exist "!this_bepinex!" (
-	set "vam_paths=!this_bepinex!"
+	set vam_paths=!this_bepinex!
 )
 
 for %%p in (%more_vam_paths%) do (
@@ -27,7 +27,7 @@ for %%p in (%more_vam_paths%) do (
 	call :canonical "!pp!"
 	set pp=!canonical_output!
 
-	set "vam_paths="!vam_paths!" "!pp!""
+	set vam_paths=!vam_paths! "!pp!"
 )
 
 if "!vam_paths!" == "" (
@@ -35,11 +35,12 @@ if "!vam_paths!" == "" (
 	exit /b 1
 )
 
-for %%p in (%vam_paths%) do (
-	set "v=%%~p"
+for %%p in (!vam_paths!) do (
+	set "vv=%%~p"
+	echo !vv!
 
-	if not exist "!v!" (
-		echo path "!v!" doesn't exist
+	if not exist "!vv!" (
+		echo path "!vv!" doesn't exist
 		exit /b 1
 	)
 )

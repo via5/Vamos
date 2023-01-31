@@ -1,6 +1,7 @@
 ﻿using B83.Win32;
 using MVR.FileManagement;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Vamos;
@@ -26,21 +27,29 @@ public class DropFiles : BasicFeature
 
 	void OnDrop(List<string> files, POINT pos)
 	{
+		Vamos.Instance.StartCo(CoDrop(files));
+	}
+
+	private IEnumerator CoDrop(List<string> files)
+	{
+		yield return new UnityEngine.WaitForSeconds(0.5f);
+
 		try
 		{
 			if (files.Count == 0)
-				return;
+			{
+				Log.Error($"no files dropped");
+				yield break;
+			}
 
 			if (files.Count > 1)
 			{
 				Log.Error($"dropping multiple files is not supported");
-				return;
+				yield break;
 			}
 
 			var f = new System.IO.FileInfo(files[0]).Name;
-			Log.Info($"dropped {f}");
-
-			Drop(f);
+			Open(f);
 		}
 		catch (Exception e)
 		{
@@ -48,7 +57,7 @@ public class DropFiles : BasicFeature
 		}
 	}
 
-	private void Drop(string filename)
+	private void Open(string filename)
 	{
 		var f = $"AddonPackages\\{filename}";
 
