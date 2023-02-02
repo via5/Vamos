@@ -32,7 +32,7 @@ public class DropFiles : BasicFeature
 
 	private IEnumerator CoDrop(List<string> files)
 	{
-		yield return new UnityEngine.WaitForSeconds(0.5f);
+		string f = null;
 
 		try
 		{
@@ -48,16 +48,22 @@ public class DropFiles : BasicFeature
 				yield break;
 			}
 
-			var f = new System.IO.FileInfo(files[0]).Name;
-			Open(f);
+			f = new System.IO.FileInfo(files[0]).Name;
+			Log.Info($"dropped {f}");
 		}
 		catch (Exception e)
 		{
 			Log.Error(e.ToString());
+			f = null;
 		}
+
+		if (f == null)
+			yield break;
+
+		yield return Open(f);
 	}
 
-	private void Open(string filename)
+	private IEnumerator Open(string filename)
 	{
 		var f = $"AddonPackages\\{filename}";
 
@@ -65,7 +71,7 @@ public class DropFiles : BasicFeature
 		if (p == null)
 		{
 			Log.Error($"no package for {f}");
-			return;
+			yield break;
 		}
 
 		List<FileEntry> files = new List<FileEntry>();
@@ -74,15 +80,16 @@ public class DropFiles : BasicFeature
 		if (files.Count == 0)
 		{
 			Log.Error($"no scene files in {f}");
-			return;
+			yield break;
 		}
 		else if (files.Count > 1)
 		{
 			Log.Error($"multiple scene files in {f}");
-			return;
+			yield break;
 		}
 
 		Log.Info($"loading {f}");
+		yield return new UnityEngine.WaitForSeconds(0.5f);
 
 		if (SuperController.singleton != null)
 			SuperController.singleton.Load(files[0].Uid);
