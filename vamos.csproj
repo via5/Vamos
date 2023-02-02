@@ -46,7 +46,7 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\VaM_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(VAMROOT)\VaM_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
 
