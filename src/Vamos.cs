@@ -96,6 +96,7 @@ public abstract class BasicFeature : IFeature
 }
 
 
+
 [BepInPlugin(Meta.Guid, Meta.Name, Meta.Version)]
 public class Vamos : BaseUnityPlugin
 {
@@ -136,6 +137,7 @@ public class Vamos : BaseUnityPlugin
 			features_.Clear();
 			features_.Add(new AutoUIScale());
 			features_.Add(new DropFiles());
+			features_.Add(new API());
 		}
 		catch (Exception e)
 		{
