@@ -6,6 +6,7 @@ public class Logger
 {
 	public enum Levels
 	{
+		Verbose,
 		Info,
 		Error
 	}
@@ -15,6 +16,11 @@ public class Logger
 	public Logger(string name)
 	{
 		name_ = name;
+	}
+
+	public void Verbose(string s)
+	{
+		DoLog(Levels.Verbose, s);
 	}
 
 	public void Info(string s)
@@ -33,6 +39,12 @@ public class Logger
 
 		switch (lv)
 		{
+			case Levels.Verbose:
+			{
+				//SuperController.LogMessage($"{t} [Vamos.{name_}] {s}");
+				break;
+			}
+
 			case Levels.Info:
 			{
 				SuperController.LogMessage($"{t} [Vamos.{name_}] {s}");
@@ -41,7 +53,7 @@ public class Logger
 
 			case Levels.Error:
 			{
-				SuperController.LogError($"{t} [Vamos.{name_}] {s}");
+				SuperController.LogMessage($"{t} [Vamos.{name_}] {s}");
 				break;
 			}
 		}

@@ -84,7 +84,13 @@ public class DropFiles : BasicFeature
 		}
 		else if (files.Count > 1)
 		{
-			Log.Error($"multiple scene files in {f}");
+			if (SuperController.singleton != null)
+			{
+				Log.Info($"multiple scene files, opening load dialog for {f}");
+				SuperController.singleton.LoadSceneDialog();
+				SuperController.singleton.fileBrowserUI.GotoDirectory(f);
+			}
+
 			yield break;
 		}
 

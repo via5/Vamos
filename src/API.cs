@@ -102,7 +102,7 @@ namespace Vamos
 				apis_.Add(name, i);
 			}
 
-			Log.Info($"enabled api {name} (refcount {i})");
+			Log.Verbose($"enabled api {name} (refcount {i})");
 		}
 
 		public void DisableAPI(string name)
@@ -114,17 +114,17 @@ namespace Vamos
 					--i;
 
 				apis_[name] = i;
-				Log.Info($"disabled api {name} (refcount {i})");
+				Log.Verbose($"disabled api {name} (refcount {i})");
 			}
 			else
 			{
-				Log.Info($"disabled api {name} (was already disabled)");
+				Log.Verbose($"disabled api {name} (was already disabled)");
 			}
 		}
 
 		public void InhibitNext(string name)
 		{
-			Log.Info($"got inhibit {name}, sending ready");
+			Log.Verbose($"got inhibit {name}, sending ready");
 
 			inhibit_.Add(name);
 
@@ -144,7 +144,7 @@ namespace Vamos
 		{
 			if (inhibit_.Contains(name))
 			{
-				Log.Info($"{name} inhibited");
+				Log.Verbose($"{name} inhibited");
 				inhibit_.Remove(name);
 				return false;
 			}
@@ -154,7 +154,7 @@ namespace Vamos
 
 		public void Ping(string name)
 		{
-			Log.Info($"got ping {name}, sending pong");
+			Log.Verbose($"got ping {name}, sending pong");
 
 			SuperController.singleton.gameObject.SendMessage(
 				"VamosPong", new object[] { name },
@@ -222,7 +222,7 @@ namespace Vamos.APIs
 			if (!API.Instance.CanRun(Name))
 				return true;
 
-			API.Instance.Log.Info($"patched {Name}");
+			API.Instance.Log.Verbose($"patched {Name}");
 
 			SuperController.singleton.gameObject.SendMessage(
 				Name, new object[] { __instance, callback, changeDirectory },
@@ -243,7 +243,7 @@ namespace Vamos.APIs
 			if (!API.Instance.CanRun(Name))
 				return true;
 
-			API.Instance.Log.Info($"patched {Name}");
+			API.Instance.Log.Verbose($"patched {Name}");
 
 			SuperController.singleton.gameObject.SendMessage(
 				Name, new object[] { __instance, fullCallback, changeDirectory },
@@ -252,4 +252,26 @@ namespace Vamos.APIs
 			return false;
 		}
 	}
+
+	[HarmonyPatch(typeof(FileBrowser), "GotoDirectory", new Type[] { typeof(string), typeof(string), typeof(bool), typeof(bool) })]
+	class FileBrowserGotoDirectoryCallback
+	{
+		private const string Name = "Vamos_uFileBrowser_FileBrowser_GotoDirectory__FileBrowser_FileBrowserCallback_string_string_bool_bool";
+
+		[HarmonyPrefix]
+		static bool Prefix(FileBrowser __instance, ref string path, ref string pkgFilter, ref bool flatten, ref bool includeRegularDirs)
+		{
+			if (!API.Instance.CanRun(Name))
+				return true;
+
+			API.Instance.Log.Verbose($"patched {Name}");
+
+			SuperController.singleton.gameObject.SendMessage(
+				Name, new object[] { __instance, path, pkgFilter, flatten, includeRegularDirs},
+				SendMessageOptions.DontRequireReceiver);
+
+			return false;
+		}
+	}
+
 }
